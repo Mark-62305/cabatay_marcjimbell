@@ -1,10 +1,16 @@
-# Use the official PHP Apache image
-FROM php:8.1-apache
+# Use official PHP + Apache image
+FROM php:8.2-apache
 
-# Enable PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+# Install PHP extensions you might need
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copy project files into container
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Allow .htaccess to override Apache config
+RUN sed -i '/<Directory \/var\/www\/html>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Copy your app to container
 COPY . /var/www/html/
 
 # Set working directory
