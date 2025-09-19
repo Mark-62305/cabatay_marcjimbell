@@ -92,9 +92,28 @@
         <!-- Pagination -->
         <?php if (isset($pagination_data)): ?>
           <div class="flex flex-col sm:flex-row justify-between items-center mt-4 gap-3">
-            <div class="flex justify-center">
-              <?= $pagination_links ?>
+            
+            <!-- Custom Pagination Links -->
+            <div class="flex items-center justify-center space-x-2">
+              <a href="?page=1" class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">First</a>
+              <a href="?page=<?= max($pagination_data['current_page']-1,1) ?>" 
+                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">&lt;</a>
+
+              <?php for ($i = 1; $i <= $pagination_data['total_pages']; $i++): ?>
+                <a href="?page=<?= $i ?>" 
+                   class="px-3 py-1 rounded-md border 
+                          <?= $i == $pagination_data['current_page'] ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' ?>">
+                  <?= $i ?>
+                </a>
+              <?php endfor; ?>
+
+              <a href="?page=<?= min($pagination_data['current_page']+1,$pagination_data['total_pages']) ?>" 
+                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">&gt;</a>
+              <a href="?page=<?= $pagination_data['total_pages'] ?>" 
+                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">Last</a>
             </div>
+
+            <!-- Pagination Info -->
             <div class="text-sm text-gray-600">
               <?= $pagination_data['info']; ?>
             </div>
