@@ -18,7 +18,7 @@
           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
           Search
         </button>
-        <a href="http://localhost:3010/student/index/1"
+        <a href="http://cabatay-marcjimbell.onrender.com/student/index/1"
           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base text-center">
           Cancel
         </a>
