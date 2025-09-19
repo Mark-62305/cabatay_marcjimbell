@@ -5,6 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StudentPage GUI</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Pagination Styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+      gap: 6px;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .pagination li {
+      display: inline-block;
+    }
+
+    .pagination a,
+    .pagination strong {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: #f1f2f6;
+      color: #2d3436;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .pagination a:hover {
+      background: #0984e3;
+      color: white;
+    }
+
+    .pagination strong {
+      background: #0984e3;
+      color: white;
+      font-weight: bold;
+    }
+
+    .pagination-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pagination-info {
+      font-size: 14px;
+      color: #636e72;
+    }
+
+    .pagination-select {
+      font-size: 14px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 to-indigo-400 p-4">
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-7xl p-6 md:p-10 animate-fadeIn space-y-6">
@@ -18,7 +77,7 @@
           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
           Search
         </button>
-        <a href="http://cabatay-marcjimbell.onrender.com/student/index/1"
+        <a href="http://localhost:3010/student/index/1"
           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base text-center">
           Cancel
         </a>
@@ -89,36 +148,20 @@
           </table>
         </div>
 
-        <!-- Pagination -->
-        <?php if (isset($pagination_data)): ?>
-          <div class="flex flex-col sm:flex-row justify-between items-center mt-4 gap-3">
-            
-            <!-- Custom Pagination Links -->
-            <div class="flex items-center justify-center space-x-2">
-              <a href="?page=1" class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">First</a>
-              <a href="?page=<?= max($pagination_data['current_page']-1,1) ?>" 
-                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">&lt;</a>
-
-              <?php for ($i = 1; $i <= $pagination_data['total_pages']; $i++): ?>
-                <a href="?page=<?= $i ?>" 
-                   class="px-3 py-1 rounded-md border 
-                          <?= $i == $pagination_data['current_page'] ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-blue-100' ?>">
-                  <?= $i ?>
-                </a>
-              <?php endfor; ?>
-
-              <a href="?page=<?= min($pagination_data['current_page']+1,$pagination_data['total_pages']) ?>" 
-                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">&gt;</a>
-              <a href="?page=<?= $pagination_data['total_pages'] ?>" 
-                 class="px-3 py-1 rounded-md border bg-white text-gray-600 hover:bg-blue-100">Last</a>
-            </div>
-
-            <!-- Pagination Info -->
-            <div class="text-sm text-gray-600">
-              <?= $pagination_data['info']; ?>
-            </div>
+      <!-- Pagination Controls -->
+      <?php if (isset($pagination_data)): ?>
+        <div class="pagination-container">
+          <!-- Pagination Links -->
+          <div class="mt-3 d-flex justify-content-center">
+              <?= $pagination_links ?>
           </div>
-        <?php endif; ?>
+          <div class="pagination-info">
+            <?= $pagination_data['info']; ?>
+            &nbsp; | &nbsp;
+            <label for="itemsPerPage"></label>
+          </div>
+        </div>
+      <?php endif; ?>
       </div>
     </div>
   </div>
