@@ -46,6 +46,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $router->get('/', 'Login::index');
 $router->match('/login', 'Login::index',['GET', 'POST']);
 $router->match('/signup', 'Login::signup',['GET', 'POST']);
+// logout
+$router->get('/logout', 'Login::logout');
 $router->get('student/index/{page}', 'Student::index');
 $router->post('/student/index/search', 'Student::index');
 $router->post('/student/index/inserted', 'Student::addd');

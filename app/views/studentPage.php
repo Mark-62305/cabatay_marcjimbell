@@ -4,8 +4,153 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StudentPage GUI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #74b9ff, #a29bfe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .main-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 1300px;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    /* Search bar at the top */
+    .search-section {
+      width: 100%;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-section form {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 2000px;
+    }
+
+    .search-section input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      width: 1900px;
+      transition: 0.3s ease;
+    }
+
+    .search-section input[type="text"]:focus {
+      border-color: #0984e3;
+      box-shadow: 0 0 5px rgba(9,132,227,0.4);;
+      outline: none;
+    }
+
+    .search-section button {
+      background: #0984e3;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      width: 20%;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s ease;
+    }
+
+    .search-section button:hover {
+      background: #0652dd;
+    }
+
+    .form-section {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .form-section h2 {
+      margin-bottom: 20px;
+      color: #2d3436;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0984e3;
+      box-shadow: 0 0 5px rgba(9,132,227,0.4);
+      outline: none;
+    }
+
+    button {
+      background: #0984e3;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0652dd;
+    }
+
+    .table-section {
+      flex: 2;
+      min-width: 400px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    th {
+      background: #f1f2f6;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
     /* Pagination Styles */
     .pagination {
       display: flex;
@@ -63,90 +208,102 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
+    .search-bar {
+      flex: 1; /* let it expand */
+      max-width: 300px; /* you can adjust to match your design */
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .search-bar button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #0984e3;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background: #0652dd;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 to-indigo-400 p-4">
-  <div class="bg-white rounded-2xl shadow-xl w-full max-w-7xl p-6 md:p-10 animate-fadeIn space-y-6">
-    
-    <!-- Search -->
-    <div class="w-full">
-      <form method="POST" action="search" class="flex flex-col sm:flex-row gap-3 w-full">
-        <input type="text" id="searchbar" name="searchbar" placeholder="Search student..."
-          class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 text-sm sm:text-base">
-        <button type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
-          Search
-        </button>
-        <a href="http://localhost:3010/student/index/1"
-          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base text-center">
-          Cancel
-        </a>
+<body>
+  <div class="main-container">
+    <div class="search-section">
+      <form method="POST" action="search" id="studentForm">
+        <input type="text" id="searchbar" name="searchbar" placeholder="Search student...">
+        <button type="submit">Search</button>
+        <button href="http://localhost:3010/student/index/1">Cancel</button>
+
       </form>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-8">
-      
-      <!-- Student Form -->
-      <div class="flex-1 bg-gray-50 rounded-xl shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Student Form</h2>
-        <form method="POST" id="studentForm" class="space-y-3">
-          <input type="hidden" id="student_id" name="id">
+    <!-- Student Form -->
+    <div class="form-section">
+      <h2>Student Form</h2>
+      <form method="POST" action="inserted" id="studentForm">
+        <!-- hidden id for update -->
+        <input type="hidden" id="student_id" name="id">
 
-          <input type="text" id="fname" name="First_Name" placeholder="First Name" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base">
-          
-          <input type="text" id="lname" name="Last_Name" placeholder="Last Name" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base">
-          
-          <input type="text" id="email" name="Email" placeholder="Email" required
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base">
+        <input type="text" id="fname" name="First_Name" placeholder="First Name" required>
+        <input type="text" id="lname" name="Last_Name" placeholder="Last Name" required>
+        <input type="text" id="email" name="Email" placeholder="Email" required>
+        <select id="role" name="role" required>
+          <option value="" disabled selected>-- Select Role --</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
 
-          <div class="flex flex-col sm:flex-row gap-3 mt-4">
-            <button type="submit" formaction="inserted"
-              class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
-              Submit
-            </button>
-            <button type="submit" formaction="update"
-              class="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
-              Update
-            </button>
-            <button type="submit" formaction="softdel"
-              class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
-              Delete
-            </button>
-          </div>
-        </form>
-      </div>
+        <!-- Insert button -->
+        <button type="submit" formaction="inserted">Submit</button>
+        <!-- Update button -->
+        <button type="submit" formaction="update">Update</button>
+        <button type="submit" formaction="softdel">Delete</button>
+      </form>
+    </div>
 
-      <!-- Table -->
-      <div class="flex-2 w-full">
-        <h2 class="text-xl font-semibold text-gray-800 mb-3">Student List</h2>
-        <div class="overflow-x-auto rounded-xl shadow">
-          <table class="w-full border-collapse text-sm sm:text-base">
-            <thead class="bg-gray-100">
+    <!-- Table -->
+    <div class="table-section" id="mytable">
+      <h2>Student List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (!empty($records)): ?>
+            <?php foreach ($records as $row): ?>
               <tr>
-                <th class="px-4 py-2 border">ID</th>
-                <th class="px-4 py-2 border">First Name</th>
-                <th class="px-4 py-2 border">Last Name</th>
-                <th class="px-4 py-2 border">Email</th>
+                <td><?= $row['id']; ?></td>
+                <td><?= $row['fname']; ?></td>
+                <td><?= $row['lname']; ?></td>
+                <td><?= $row['email']; ?></td>
               </tr>
-            </thead>
-            <tbody class="divide-y">
-              <?php if (!empty($records)): ?>
-                <?php foreach ($records as $row): ?>
-                  <tr class="hover:bg-blue-50 cursor-pointer">
-                    <td class="px-4 py-2 border"><?= $row['id']; ?></td>
-                    <td class="px-4 py-2 border"><?= $row['fname']; ?></td>
-                    <td class="px-4 py-2 border"><?= $row['lname']; ?></td>
-                    <td class="px-4 py-2 border"><?= $row['email']; ?></td>
-                  </tr>
-                <?php endforeach; ?>
-              <?php else: ?>
-                <tr><td colspan="4" class="px-4 py-2 text-center text-gray-500">No students found</td></tr>
-              <?php endif; ?>
-            </tbody>
-          </table>
-        </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr><td colspan="4">No students found</td></tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
 
       <!-- Pagination Controls -->
       <?php if (isset($pagination_data)): ?>
@@ -162,21 +319,23 @@
           </div>
         </div>
       <?php endif; ?>
-      </div>
     </div>
   </div>
 
   <script>
     // Row click = fill form
-    document.querySelectorAll("tbody tr").forEach(row => {
+    document.querySelectorAll("#mytable tbody tr").forEach(row => {
       row.addEventListener("click", function() {
         let cells = this.querySelectorAll("td");
-        document.getElementById("student_id").value = cells[0]?.textContent.trim() || "";
-        document.getElementById("fname").value = cells[1]?.textContent.trim() || "";
-        document.getElementById("lname").value = cells[2]?.textContent.trim() || "";
-        document.getElementById("email").value = cells[3]?.textContent.trim() || "";
+        document.getElementById("student_id").value = cells[0]?.textContent || "";
+        document.getElementById("fname").value = cells[1]?.textContent || "";
+        document.getElementById("lname").value = cells[2]?.textContent || "";
+        document.getElementById("email").value = cells[3]?.textContent || "";
+        document.getElementById("role").value = cells[4]?.textContent || "user";
       });
     });
+
+    
   </script>
 </body>
 </html>

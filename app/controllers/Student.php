@@ -7,10 +7,23 @@ class Student extends Controller
     public function __construct()
     {
         parent::__construct();
+
+        // Start session if not started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Only allow admin
+        if (empty($_SESSION['logged_in']) || ($_SESSION['role'] ?? '') !== 'admin') {
+            // Not allowed: redirect to login
+            header("Location: /login");
+            exit;
+        }
+
         $this->call->model('Mod_Student');
         $this->call->library('pagination');
 
-        // ✅ Bootstrap pagination theme
+        // Bootstrap pagination theme
         $this->pagination->set_theme('custom');
         $this->pagination->set_custom_classes([
             'ul'       => 'pagination justify-content-center',
@@ -98,7 +111,8 @@ class Student extends Controller
                     'fname' => $_POST['First_Name'],
                     'lname' => $_POST['Last_Name'],
                     'email' => $_POST['Email'],
-                    'passw' => $passwo
+                    'passw' => $passwo,
+                    'role'  => $_POST['role']  
                 ];
                 $this->Mod_Student->insert($users);
 
