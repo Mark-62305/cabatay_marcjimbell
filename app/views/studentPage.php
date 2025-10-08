@@ -10,24 +10,47 @@
       theme: {
         extend: {
           colors: {
-            redv: '#D7263D',  // red accent
-            violetv: '#7F00FF', // violet accent
-            greenv: '#00C49A', // green accent
-          }
-        }
-      }
-    }
+            redv: '#D7263D',
+            violetv: '#7F00FF',
+            greenv: '#00C49A',
+          },
+          keyframes: {
+            moveGradient: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            },
+          },
+          animation: {
+            moveGradient: 'moveGradient 8s ease-in-out infinite',
+          },
+        },
+      },
+    };
   </script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #00C49A, #111827, #7F00FF);
+      background-size: 300% 300%;
+      animation: moveGradient 10s ease infinite;
+    }
+    @keyframes moveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 font-sans p-4">
-  <div class="relative w-full max-w-6xl bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl p-8 flex flex-wrap gap-6 animate-fadeIn">
+<body class="min-h-screen flex items-center justify-center text-gray-100 font-sans p-6 relative overflow-hidden">
 
-    <!-- Logout Button -->
-    <button onclick="window.location.href='/logout'" 
-      class="absolute top-5 right-5 bg-redv hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold transition">
-      Logout
-    </button>
+  <!-- Floating Logout Button -->
+  <button onclick="window.location.href='/logout'"
+    class="fixed top-5 right-5 bg-redv hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
+    Logout
+  </button>
+
+  <!-- Main Container -->
+  <div class="w-full max-w-6xl bg-gray-900/80 backdrop-blur-lg border border-gray-700 shadow-2xl rounded-2xl p-8 flex flex-wrap gap-6 animate-fadeIn">
 
     <!-- Search Section -->
     <div class="w-full">
@@ -79,7 +102,7 @@
     <div class="flex-2 min-w-[400px] flex-1 bg-gray-800 rounded-xl p-6 shadow-md overflow-x-auto">
       <h2 class="text-xl font-semibold text-center mb-4 text-violetv">Student List</h2>
 
-      <table class="w-full border border-gray-700 text-sm rounded-lg overflow-hidden">
+      <table id="mytable" class="w-full border border-gray-700 text-sm rounded-lg overflow-hidden">
         <thead class="bg-gray-700 text-gray-100">
           <tr>
             <th class="py-2 px-3">ID</th>
