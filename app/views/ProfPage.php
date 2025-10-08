@@ -5,21 +5,20 @@
   <title>Profile Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white shadow-lg rounded-2xl w-full max-w-4xl p-8 relative">
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-gray-800 shadow-2xl rounded-2xl w-full max-w-4xl p-8 relative border border-violet-700/40">
     
     <!-- Logout Button -->
     <div class="absolute top-6 right-6">
       <a href="logout" 
-         class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-md transition">
+         class="bg-gradient-to-r from-red-600 via-violet-600 to-green-600 text-white px-5 py-2 rounded-lg shadow-md hover:opacity-90 transition-all duration-300">
         Logout
       </a>
     </div>
 
-    <h2 class="text-3xl font-bold text-gray-800 mb-8">Profile</h2>
+    <h2 class="text-3xl font-bold text-violet-400 mb-8 text-center tracking-wide">Profile</h2>
 
     <?php
-      // ✅ Safely pull user data from session or default
       $fname   = $_SESSION['fname'] ?? $data['fname'] ?? 'N/A';
       $lname   = $_SESSION['lname'] ?? $data['lname'] ?? 'N/A';
       $email   = $_SESSION['email'] ?? $data['email'] ?? 'N/A';
@@ -33,14 +32,14 @@
       
       <!-- Profile Image + Upload -->
       <div class="flex flex-col items-center">
-        <div class="w-40 h-40 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+        <div class="w-40 h-40 bg-gray-700 rounded-xl flex items-center justify-center overflow-hidden border border-violet-600/30">
           <img id="profileImage" 
                src="<?= $image ? 'uploads/' . htmlspecialchars($image) : 'https://via.placeholder.com/150' ?>" 
                alt="Profile" 
                class="w-full h-full object-cover">
         </div>
         <label class="mt-4">
-          <span class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg shadow transition cursor-pointer">
+          <span class="bg-gradient-to-r from-violet-600 to-green-600 hover:opacity-90 text-white px-6 py-2 rounded-lg shadow cursor-pointer transition">
             Upload
           </span>
           <input type="file" accept="image/*" class="hidden" id="uploadInput">
@@ -52,52 +51,52 @@
             
         <!-- Name -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Name</label>
+          <label class="block text-sm font-medium text-gray-300">Name</label>
           <input type="text" name="name" value="<?= htmlspecialchars($fname) ?> <?= htmlspecialchars($lname) ?>"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                 class="w-full px-3 py-2 bg-gray-700 border border-violet-600/30 rounded-lg focus:ring-2 focus:ring-violet-500 text-gray-100 outline-none transition"
                  disabled>
         </div>
 
         <!-- Email -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <label class="block text-sm font-medium text-gray-300">Email</label>
           <input type="email" name="email" value="<?= htmlspecialchars($email) ?>"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                 class="w-full px-3 py-2 bg-gray-700 border border-violet-600/30 rounded-lg focus:ring-2 focus:ring-green-500 text-gray-100 outline-none transition"
                  disabled>
         </div>
 
         <!-- Age -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Age</label>
+          <label class="block text-sm font-medium text-gray-300">Age</label>
           <input type="number" name="age" value="<?= htmlspecialchars($age) ?>"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                 class="w-full px-3 py-2 bg-gray-700 border border-violet-600/30 rounded-lg focus:ring-2 focus:ring-red-500 text-gray-100 outline-none transition"
                  disabled>
         </div>
 
         <!-- Address -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Address</label>
+          <label class="block text-sm font-medium text-gray-300">Address</label>
           <input type="text" name="address" value="<?= htmlspecialchars($address) ?>"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                 class="w-full px-3 py-2 bg-gray-700 border border-violet-600/30 rounded-lg focus:ring-2 focus:ring-green-500 text-gray-100 outline-none transition"
                  disabled>
         </div>
 
         <!-- Password -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <label class="block text-sm font-medium text-gray-300">Password</label>
           <input type="password" name="password" value="<?= htmlspecialchars($passw) ?>"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                 class="w-full px-3 py-2 bg-gray-700 border border-violet-600/30 rounded-lg focus:ring-2 focus:ring-red-500 text-gray-100 outline-none transition"
                  disabled>
         </div>
 
         <!-- Buttons -->
         <div class="mt-6 flex gap-4">
           <button type="button" id="editBtn"
-                  class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+                  class="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-lg shadow transition">
             Edit
           </button>
           <button type="submit" id="saveBtn"
-                  class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg shadow"
+                  class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow transition"
                   disabled>
             Save
           </button>
@@ -113,14 +112,12 @@
     const uploadInput = document.getElementById("uploadInput");
     const profileImage = document.getElementById("profileImage");
 
-    // Enable fields on Edit
     editBtn.addEventListener("click", () => {
       formInputs.forEach(input => input.disabled = false);
       saveBtn.disabled = false;
       editBtn.disabled = true;
     });
 
-    // Handle Save (demo only)
     document.getElementById("profileForm").addEventListener("submit", (e) => {
       e.preventDefault();
       alert("Profile saved!");
@@ -129,14 +126,11 @@
       editBtn.disabled = false;
     });
 
-    // Preview uploaded image
     uploadInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = () => {
-          profileImage.src = reader.result;
-        };
+        reader.onload = () => profileImage.src = reader.result;
         reader.readAsDataURL(file);
       }
     });

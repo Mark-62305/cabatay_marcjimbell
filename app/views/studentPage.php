@@ -1,322 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StudentPage GUI</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #74b9ff, #a29bfe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            redv: '#D7263D',  // red accent
+            violetv: '#7F00FF', // violet accent
+            greenv: '#00C49A', // green accent
+          }
+        }
+      }
     }
-
-    .main-container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      width: 90%;
-      max-width: 1300px;
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    /* Search bar at the top */
-    .search-section {
-      width: 100%;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .search-section form {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      max-width: 2000px;
-    }
-
-    .search-section input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-      width: 1900px;
-      transition: 0.3s ease;
-    }
-
-    .search-section input[type="text"]:focus {
-      border-color: #0984e3;
-      box-shadow: 0 0 5px rgba(9,132,227,0.4);;
-      outline: none;
-    }
-
-    .search-section button {
-      background: #0984e3;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 10px;
-      width: 20%;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background 0.3s ease;
-    }
-
-    .search-section button:hover {
-      background: #0652dd;
-    }
-
-    .form-section {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .form-section h2 {
-      margin-bottom: 20px;
-      color: #2d3436;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: 0.3s ease;
-    }
-
-    input[type="text"]:focus {
-      border-color: #0984e3;
-      box-shadow: 0 0 5px rgba(9,132,227,0.4);
-      outline: none;
-    }
-
-    button {
-      background: #0984e3;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
-      width: 100%;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #0652dd;
-    }
-
-    .table-section {
-      flex: 2;
-      min-width: 400px;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px 12px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    th {
-      background: #f1f2f6;
-      font-weight: 600;
-    }
-
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-
-    /* Pagination Styles */
-    .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      list-style: none;
-      gap: 6px;
-      padding: 0;
-      margin: 15px 0;
-    }
-
-    .pagination li {
-      display: inline-block;
-    }
-
-    .pagination a,
-    .pagination strong {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 6px;
-      background: #f1f2f6;
-      color: #2d3436;
-      text-decoration: none;
-      font-size: 14px;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .pagination a:hover {
-      background: #0984e3;
-      color: white;
-    }
-
-    .pagination strong {
-      background: #0984e3;
-      color: white;
-      font-weight: bold;
-    }
-
-    .pagination-container {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .pagination-info {
-      font-size: 14px;
-      color: #636e72;
-    }
-
-    .pagination-select {
-      font-size: 14px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    .search-bar {
-      flex: 1; /* let it expand */
-      max-width: 300px; /* you can adjust to match your design */
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .search-bar button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 6px;
-      background: #0984e3;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .search-bar button:hover {
-      background: #0652dd;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-  </style>
+  </script>
 </head>
-<body>
-  <div class="main-container">
-    <div class="search-section">
-      <form method="POST" action="search" id="studentForm">
-        <input type="text" id="searchbar" name="searchbar" placeholder="Search student...">
-        <button type="submit">Search</button>
-        <button href="http://localhost:3010/student/index/1">Cancel</button>
 
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 font-sans p-4">
+  <div class="relative w-full max-w-6xl bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl p-8 flex flex-wrap gap-6 animate-fadeIn">
+
+    <!-- Logout Button -->
+    <button onclick="window.location.href='/logout'" 
+      class="absolute top-5 right-5 bg-redv hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold transition">
+      Logout
+    </button>
+
+    <!-- Search Section -->
+    <div class="w-full">
+      <form method="POST" action="search" id="studentForm" class="flex gap-3">
+        <input type="text" id="searchbar" name="searchbar" placeholder="Search student..."
+          class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-violetv placeholder-gray-400" />
+        <button type="submit" 
+          class="bg-violetv hover:bg-violet-700 px-5 py-2 rounded-lg text-white font-medium transition">
+          Search
+        </button>
+        <button type="button" onclick="window.location.href='http://localhost:3010/student/index/1'"
+          class="bg-greenv hover:bg-green-600 px-5 py-2 rounded-lg text-white font-medium transition">
+          Cancel
+        </button>
       </form>
     </div>
 
     <!-- Student Form -->
-    <div class="form-section">
-      <h2>Student Form</h2>
-      <form method="POST" action="inserted" id="studentForm">
-        <!-- hidden id for update -->
+    <div class="flex-1 min-w-[300px] bg-gray-800 rounded-xl p-6 shadow-md">
+      <h2 class="text-xl font-semibold text-center mb-4 text-greenv">Student Form</h2>
+      <form method="POST" action="inserted" id="studentForm" class="space-y-3">
         <input type="hidden" id="student_id" name="id">
 
-        <input type="text" id="fname" name="First_Name" placeholder="First Name" required>
-        <input type="text" id="lname" name="Last_Name" placeholder="Last Name" required>
-        <input type="text" id="email" name="Email" placeholder="Email" required>
-        <select id="role" name="role" required>
+        <input type="text" id="fname" name="First_Name" placeholder="First Name" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violetv" />
+        <input type="text" id="lname" name="Last_Name" placeholder="Last Name" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violetv" />
+        <input type="text" id="email" name="Email" placeholder="Email" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violetv" />
+        <select id="role" name="role" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-violetv text-gray-300">
           <option value="" disabled selected>-- Select Role --</option>
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>
 
-        <!-- Insert button -->
-        <button type="submit" formaction="inserted">Submit</button>
-        <!-- Update button -->
-        <button type="submit" formaction="update">Update</button>
-        <button type="submit" formaction="softdel">Delete</button>
+        <div class="grid grid-cols-3 gap-3 pt-3">
+          <button type="submit" formaction="inserted"
+            class="bg-violetv hover:bg-violet-700 py-2 rounded-lg text-white font-semibold transition">Submit</button>
+          <button type="submit" formaction="update"
+            class="bg-greenv hover:bg-green-600 py-2 rounded-lg text-white font-semibold transition">Update</button>
+          <button type="submit" formaction="softdel"
+            class="bg-redv hover:bg-red-700 py-2 rounded-lg text-white font-semibold transition">Delete</button>
+        </div>
       </form>
     </div>
 
-    <!-- Table -->
-    <div class="table-section" id="mytable">
-      <h2>Student List</h2>
-      <table>
-        <thead>
+    <!-- Table Section -->
+    <div class="flex-2 min-w-[400px] flex-1 bg-gray-800 rounded-xl p-6 shadow-md overflow-x-auto">
+      <h2 class="text-xl font-semibold text-center mb-4 text-violetv">Student List</h2>
+
+      <table class="w-full border border-gray-700 text-sm rounded-lg overflow-hidden">
+        <thead class="bg-gray-700 text-gray-100">
           <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th class="py-2 px-3">ID</th>
+            <th class="py-2 px-3">First Name</th>
+            <th class="py-2 px-3">Last Name</th>
+            <th class="py-2 px-3">Email</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-gray-900">
           <?php if (!empty($records)): ?>
             <?php foreach ($records as $row): ?>
-              <tr>
-                <td><?= $row['id']; ?></td>
-                <td><?= $row['fname']; ?></td>
-                <td><?= $row['lname']; ?></td>
-                <td><?= $row['email']; ?></td>
+              <tr class="hover:bg-gray-700 cursor-pointer transition">
+                <td class="py-2 px-3 border-t border-gray-700"><?= $row['id']; ?></td>
+                <td class="py-2 px-3 border-t border-gray-700"><?= $row['fname']; ?></td>
+                <td class="py-2 px-3 border-t border-gray-700"><?= $row['lname']; ?></td>
+                <td class="py-2 px-3 border-t border-gray-700"><?= $row['email']; ?></td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
-            <tr><td colspan="4">No students found</td></tr>
+            <tr><td colspan="4" class="text-center py-3 text-gray-400">No students found</td></tr>
           <?php endif; ?>
         </tbody>
       </table>
 
-      <!-- Pagination Controls -->
       <?php if (isset($pagination_data)): ?>
-        <div class="pagination-container">
-          <!-- Pagination Links -->
-          <div class="mt-3 d-flex justify-content-center">
-              <?= $pagination_links ?>
-          </div>
-          <div class="pagination-info">
-            <?= $pagination_data['info']; ?>
-            &nbsp; | &nbsp;
-            <label for="itemsPerPage"></label>
-          </div>
+        <div class="mt-4 flex flex-wrap justify-between items-center text-sm text-gray-400">
+          <div class="flex gap-2"><?= $pagination_links ?></div>
+          <div><?= $pagination_data['info']; ?></div>
         </div>
       <?php endif; ?>
     </div>
@@ -331,11 +122,9 @@
         document.getElementById("fname").value = cells[1]?.textContent || "";
         document.getElementById("lname").value = cells[2]?.textContent || "";
         document.getElementById("email").value = cells[3]?.textContent || "";
-        document.getElementById("role").value = cells[4]?.textContent || "user";
+        document.getElementById("role").value = "user";
       });
     });
-
-    
   </script>
 </body>
 </html>
