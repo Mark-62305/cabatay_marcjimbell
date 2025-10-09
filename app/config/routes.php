@@ -49,6 +49,7 @@ $router->match('/signup', 'Login::signup',['GET', 'POST']);
 // logout
 $router->get('/logout', 'Login::logout');
 $router->get('student/index/{page}', 'Student::index');
+$router->get('index.php/student/index/{page}', 'Student::index');
 $router->post('/student/index/search', 'Student::index');
 $router->post('/student/index/inserted', 'Student::addd');
 $router->post('/student/index/update', 'Student::updt');
