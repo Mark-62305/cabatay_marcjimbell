@@ -38,6 +38,63 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+      gap: 6px;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .pagination li {
+      display: inline-block;
+    }
+
+    .pagination a,
+    .pagination strong {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: #f1f2f6;
+      color: #2d3436;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .pagination a:hover {
+      background: #0984e3;
+      color: white;
+    }
+
+    .pagination strong {
+      background: #0984e3;
+      color: white;
+      font-weight: bold;
+    }
+
+    .pagination-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pagination-info {
+      font-size: 14px;
+      color: #636e72;
+    }
+
+    .pagination-select {
+      font-size: 14px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 
@@ -128,9 +185,16 @@
       </table>
 
       <?php if (isset($pagination_data)): ?>
-        <div class="mt-4 flex flex-wrap justify-between items-center text-sm text-gray-400">
-          <div class="flex gap-2"><?= $pagination_links ?></div>
-          <div><?= $pagination_data['info']; ?></div>
+        <div class="pagination-container">
+          <!-- Pagination Links -->
+          <div class="mt-3 d-flex justify-content-center">
+              <?= $pagination_links ?>
+          </div>
+          <div class="pagination-info">
+            <?= $pagination_data['info']; ?>
+            &nbsp; | &nbsp;
+            <label for="itemsPerPage"></label>
+          </div>
         </div>
       <?php endif; ?>
     </div>
