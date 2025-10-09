@@ -53,8 +53,3 @@ $router->post('/student/index/search', 'Student::index');
 $router->post('/student/index/inserted', 'Student::addd');
 $router->post('/student/index/update', 'Student::updt');
 $router->post('/student/index/softdel', 'Student::delete');
-$router->get('/file-upload', 'UploadController::index');   // show upload form
-$router->post('/file-upload/store', 'UploadController::store'); // handle upload
-
-
-
