@@ -215,7 +215,7 @@ $config['sess_driver']             = 'file';
 $config['sess_table']              = 'sessions';
 $config['sess_cookie_name']        = 'LLSession';
 $config['sess_expiration']         = 7200;
-$config['sess_save_path']          = '/var/www/html/writable/sessions';
+$config['sess_save_path']          = '/tmp/sessions';
 $config['sess_match_ip']           = TRUE;
 $config['sess_match_fingerprint']  = TRUE;
 $config['sess_time_to_update']     = 300;
@@ -227,7 +227,7 @@ $config['lock_duration_invalid']   = 900;
 $config['max_session_creations']   = 10;
 $config['creation_window']         = 60;
 $config['lock_duration_creation']  = 120;
-$config['security_file']           = APP_DIR . 'runtime/session/session_security.json';
+$config['security_file']           = '/tmp/session_security.json';
 
 /*
 |--------------------------------------------------------------------------
