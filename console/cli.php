@@ -63,6 +63,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 class {$class_name} extends {$extends} {
 ";
 
+    // Add model-specific properties
     if ($type === 'model') {
         $content .= "    protected \$table = '';\n";
         $content .= "    protected \$primary_key = 'id';\n\n";
@@ -78,16 +79,15 @@ class {$class_name} extends {$extends} {
 }
 
 function generate_helper($name) {
-    $parts = explode('/', str_replace('\\', '/', $name));
-    $base_name = array_pop($parts);
-    $relative_path = implode(DIRECTORY_SEPARATOR, $parts);
+    // Check if name has an extension
+    $extension = pathinfo($name, PATHINFO_EXTENSION);
+    $base_name = $extension ? pathinfo($name, PATHINFO_FILENAME) : $name;
 
-    $file_name = $base_name . '_helper.php';
-    $folder_path = APP_DIR . 'helpers' . DIRECTORY_SEPARATOR . $relative_path;
-    $file_path = $folder_path . DIRECTORY_SEPARATOR . $file_name;
+    // File name with or without extension
+    $file_name = $extension ? $name : $base_name . '_helper.php';
+    $file_path = APP_DIR . 'helpers/' . $file_name;
 
-    if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
-
+    // Function name will always end with _helper
     $function_name = strtolower($base_name) . '_helper';
 
     $content = "<?php
@@ -108,15 +108,10 @@ function {$function_name}()
     write_file($file_path, $content, 'Helper', $file_name);
 }
 
+
 function generate_library($name) {
-    $parts = explode('/', str_replace('\\', '/', $name));
-    $class_name = ucfirst(array_pop($parts));
-    $relative_path = implode(DIRECTORY_SEPARATOR, $parts);
-
-    $folder_path = APP_DIR . 'libraries' . DIRECTORY_SEPARATOR . $relative_path;
-    $file_path = $folder_path . DIRECTORY_SEPARATOR . $class_name . '.php';
-
-    if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
+    $class_name = ucfirst($name);
+    $file_path = APP_DIR . 'libraries/' . $class_name . '.php';
 
     $content = "<?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
@@ -139,15 +134,10 @@ class {$class_name} {
 }
 
 function generate_view($name) {
-    $parts = explode('/', str_replace('\\', '/', $name));
-    $base_name = array_pop($parts);
-    $relative_path = implode(DIRECTORY_SEPARATOR, $parts);
-
-    $file_name = $base_name . '.php';
-    $folder_path = APP_DIR . 'views' . DIRECTORY_SEPARATOR . $relative_path;
-    $file_path = $folder_path . DIRECTORY_SEPARATOR . $file_name;
-
-    if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
+    $extension = pathinfo($name, PATHINFO_EXTENSION);
+    $base_name = $extension ? pathinfo($name, PATHINFO_FILENAME) : $name;
+    $file_name = $extension ? $name : $name . '.php';
+    $file_path = APP_DIR . 'views/' . $file_name;
 
     $content = "<!DOCTYPE html>
 <html lang=\"en\">
@@ -165,14 +155,7 @@ function generate_view($name) {
 }
 
 function generate_language($name) {
-    $parts = explode('/', str_replace('\\', '/', $name));
-    $file_base = array_pop($parts);
-    $relative_path = implode(DIRECTORY_SEPARATOR, $parts);
-
-    $folder_path = APP_DIR . 'language' . DIRECTORY_SEPARATOR . $relative_path;
-    $file_path = $folder_path . DIRECTORY_SEPARATOR . $file_base . '.php';
-
-    if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
+    $file_path = APP_DIR . 'language/' . $name . '.php';
 
     $content = "<?php
 return array(
@@ -183,24 +166,17 @@ return array(
 );
 ";
 
-    write_file($file_path, $content, 'Language', $file_base);
+    write_file($file_path, $content, 'Language', $name);
 }
 
 function generate_config($name) {
-    $parts = explode('/', str_replace('\\', '/', $name));
-    $file_base = array_pop($parts);
-    $relative_path = implode(DIRECTORY_SEPARATOR, $parts);
-
-    $folder_path = APP_DIR . 'config' . DIRECTORY_SEPARATOR . $relative_path;
-    $file_path = $folder_path . DIRECTORY_SEPARATOR . $file_base . '.php';
-
-    if (!is_dir($folder_path)) mkdir($folder_path, 0777, true);
+    $file_path = APP_DIR . 'config/' . $name . '.php';
 
     $content = "<?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /**
- * Config: {$file_base}
+ * Config: {$name}
  * 
  * Automatically generated via CLI.
  */
@@ -208,7 +184,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 // Add your configuration here
 ";
 
-    write_file($file_path, $content, 'Config', $file_base);
+    write_file($file_path, $content, 'Config', $name);
 }
 
 function write_file($path, $content, $type, $name) {

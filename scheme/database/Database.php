@@ -194,10 +194,10 @@ class Database {
     public function __construct($dbname = NULL)
     {
         if(is_null($dbname)) {
-        $database_config = database_config()['main'];
+        $database_config =& database_config()['main'];
         } else {
             if(isset(database_config()[$dbname])) {
-                $database_config = database_config()[$dbname];
+                $database_config =& database_config()[$dbname];
             } else {
                 throw new PDOException('No active configuration for this database.');
             }
@@ -242,13 +242,7 @@ class Database {
             $this->db = new PDO($dsn, $username, $password, $options);
              $this->driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
         } catch (Exception $e) {
-            $error = load_class('Errors', 'kernel');
-            $error->show_database_error(
-                $e->getMessage(),
-                $this->getSQL ?? '',
-                $this->bindValues ?? [],
-                $e
-            );
+            throw new PDOException($e->getMessage());
         }
     }
 
@@ -1016,20 +1010,19 @@ class Database {
      */
     public function in($field, array $keys, $type = '', $andOr = 'AND')
     {
-        if (!empty($keys)) {
-            $placeholders = implode(', ', array_fill(0, count($keys), '?'));
-            foreach ($keys as $v) {
-                $this->bindValues[] = $v;
+        if (is_array($keys)) {
+            $_keys = [];
+            foreach ($keys as $k => $v) {
+                $_keys[] = (is_numeric($v) ? $v : '?');
             }
-
-            $where = "$field {$type}IN ($placeholders)";
+            $where = $field . ' ' . $type . 'IN (' . implode(', ', $_keys) . ')';
 
             if ($this->grouped) {
                 $where = '(' . $where;
                 $this->grouped = false;
             }
 
-            $this->where = is_null($this->where)
+            $this->where = (is_null($this->where))
                 ? ' WHERE ' . $where
                 : $this->where . ' ' . $andOr . ' ' . $where;
         }
@@ -1281,14 +1274,8 @@ class Database {
             $stmt->execute($this->bindValues);
             $this->rowCount = $stmt->rowCount();
             return $stmt->fetch($mode);
-        } catch (Exception $e) {
-            $error = load_class('Errors', 'kernel');
-            $error->show_database_error(
-                $e->getMessage(),
-                $this->getSQL ?? '',
-                $this->bindValues ?? [],
-                $e
-            );
+        } catch(Exception $e) {
+            throw new PDOException($e->getMessage().'<div style="background-color:#000;color:#fff;padding:15px">Query: '.$this->getSQL.'</div>');
         }
     }
 
@@ -1306,14 +1293,8 @@ class Database {
             $stmt->execute($this->bindValues);
             $this->rowCount = $stmt->rowCount();
             return $stmt->fetchAll($mode);
-        } catch (Exception $e) {
-            $error = load_class('Errors', 'kernel');
-            $error->show_database_error(
-                $e->getMessage(),
-                $this->getSQL ?? '',
-                $this->bindValues ?? [],
-                $e
-            );
+        } catch(Exception $e) {
+            throw new PDOException($e->getMessage().'<div style="background-color:#000;color:#fff;padding:15px">Query: '.$this->getSQL.'</div>');
         }
     }
 
